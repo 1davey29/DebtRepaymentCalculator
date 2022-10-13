@@ -67,8 +67,20 @@
 
         string fileName = Console.ReadLine() + ".txt";
 
+        using (StreamWriter sw = File.CreateText(fileName))
+        {
+            foreach (Debt debt in Debts)
+            {
+                sw.WriteLine(debt.GetSaveString());
+            }
+        }
+        
+        return 0;
+    }
 
-
+    // Loads debts from a text file
+    private static int LoadDebtFile()
+    {
         return 0;
     }
 
@@ -115,7 +127,17 @@
             return saveString;
         }
 
-        // Constructor for Debt class
+        // Load Constructor for Debt class
+        public Debt(string saveString)
+        {
+            string[] debtVariables = saveString.Split("||");
+            Name = debtVariables[0];
+            Balance = float.Parse(debtVariables[1]);
+            APR = float.Parse(debtVariables[2]) / 100;
+            MonthlyPayment = debtVariables[3];
+        }
+
+        // Main Constructor for Debt class
         public Debt(string name, float balance, float apr, string monthlyPayment)
         {
             Name = name;

@@ -1,5 +1,8 @@
 ﻿internal class Program
 {
+    // List of all debts
+    private static List<Debt> Debts = new List<Debt>();
+
     private static void Main(string[] args)
     {
         // Prints welcome message to the program
@@ -10,6 +13,7 @@
         } while (!Menu());
     }
 
+    // Prints menu options and allows for user selection
     private static bool Menu()
     {
         bool isQuitting = false;
@@ -35,6 +39,8 @@
                     break;
 
                 case "3":
+                    SaveDebtFile();
+
                     break;
 
                 case "4":
@@ -54,6 +60,18 @@
         return isQuitting;
     }
 
+    // Saves debts to a writable text file
+    private static int SaveDebtFile()
+    {
+        Console.Write("Enter file name (file extension will be automatically appended): ");
+
+        string fileName = Console.ReadLine() + ".txt";
+
+
+
+        return 0;
+    }
+
     // Class representing a single debt account of the user (such as credit cards, Affirm, etc.)
     class Debt
     {
@@ -69,16 +87,19 @@
         // Debt account's monthly payment formula
         private string MonthlyPayment = "";
 
+        // Updates balance of account based on adjustment amount
         public void UpdateBalance(float adjustment)
         {
             Balance += adjustment;
         }
 
+        // Updates APR
         public void UpdateAPR(float newAPR)
         {
             APR = newAPR;
         }
 
+        // Returns monthly payment based on MonthlyPayment formula
         public float GetMonthlyPayment()
         {
             float monthlyPayment = 0;
@@ -86,6 +107,7 @@
             return monthlyPayment;
         }
 
+        // Returns save string to be written to file
         public string GetSaveString()
         {
             string saveString = $"{Name}||{Balance}||{APR}||{MonthlyPayment}";
@@ -93,6 +115,7 @@
             return saveString;
         }
 
+        // Constructor for Debt class
         public Debt(string name, float balance, float apr, string monthlyPayment)
         {
             Name = name;

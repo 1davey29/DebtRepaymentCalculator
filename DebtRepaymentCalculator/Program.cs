@@ -61,7 +61,7 @@
         private string Name = "";
 
         // Debt account's current balance
-        private int Balance = 0;
+        private float Balance = 0;
 
         // Debt account's APR
         private float APR = 0;
@@ -69,7 +69,31 @@
         // Debt account's monthly payment formula
         private string MonthlyPayment = "";
 
-        public Debt(string name, int balance, float apr, string monthlyPayment)
+        public void UpdateBalance(float adjustment)
+        {
+            Balance += adjustment;
+        }
+
+        public void UpdateAPR(float newAPR)
+        {
+            APR = newAPR;
+        }
+
+        public float GetMonthlyPayment()
+        {
+            float monthlyPayment = 0;
+
+            return monthlyPayment;
+        }
+
+        public string GetSaveString()
+        {
+            string saveString = $"{Name}||{Balance}||{APR}||{MonthlyPayment}";
+
+            return saveString;
+        }
+
+        public Debt(string name, float balance, float apr, string monthlyPayment)
         {
             Name = name;
             Balance = balance;

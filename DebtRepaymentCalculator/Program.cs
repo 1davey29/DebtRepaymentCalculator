@@ -81,6 +81,37 @@
     // Loads debts from a text file
     private static int LoadDebtFile()
     {
+        string fileName;
+        bool firstIteration = true;
+
+        // Prompts user for file name and confirms file exists
+        do
+        {
+            if (!firstIteration)
+            {
+                Console.WriteLine("File does not exist");
+            }
+
+            Console.Write("Enter file name (file extension will be automatically appended): ");
+
+            fileName = Console.ReadLine() + ".txt";
+            firstIteration = false;
+
+            // Add some form of save file validation to confirm file is valid for the program
+        } while (!File.Exists(fileName));
+
+        Debts = new List<Debt>();
+
+        using (StreamReader sr = File.OpenText(fileName))
+        {
+            string debtString;
+
+            while ((debtString = sr.ReadLine()) != null)
+            {
+                Debts.Add(new Debt(debtString));
+            }
+        }
+
         return 0;
     }
 

@@ -10,11 +10,27 @@
 
         do
         {
-        } while (!Menu());
+        } while (!MainMenu());
     }
 
-    // Prints menu options and allows for user selection
-    private static bool Menu()
+    // Primary debt program function, shows user debt accounts and gives menu options for editing debts and doing calculations
+    private static void RunDebtProgram()
+    {
+        do
+        {
+            Console.WriteLine("Current debt accounts:\n");
+
+            foreach (Debt debt in Debts)
+            {
+                Console.WriteLine(debt.ToString());
+            }
+
+            Console.WriteLine("\n");
+        } while (!ProgramMenu());
+    }
+
+    // Prints main menu options and allows for user selection
+    private static bool MainMenu()
     {
         bool isQuitting = false;
         bool isValid = true;
@@ -56,6 +72,14 @@
                     break;
             }
         } while (!isValid);
+
+        return isQuitting;
+    }
+
+    // Prints program menu options and allows for user selection
+    private static bool ProgramMenu()
+    {
+        bool isQuitting = false;
 
         return isQuitting;
     }
@@ -175,6 +199,16 @@
             Balance = balance;
             APR = apr / 100;
             MonthlyPayment = monthlyPayment;
+        }
+
+        // Overrides ToString function for use in displaying to the user
+        public override string ToString()
+        {
+            string returnString = "";
+
+            returnString = $"{Name}: {Balance} @ {APR * 100}% APR for {GetMonthlyPayment} a month";
+
+            return returnString;
         }
     }
 }

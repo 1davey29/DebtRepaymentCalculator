@@ -49,9 +49,13 @@
             switch (Console.ReadLine())
             {
                 case "1":
+                    RunDebtProgram();
+
                     break;
 
                 case "2":
+                    LoadDebtFile();
+
                     break;
 
                 case "3":
@@ -80,6 +84,70 @@
     private static bool ProgramMenu()
     {
         bool isQuitting = false;
+        bool isValid = true;
+
+        Console.WriteLine("Below are the menu options:\n\n" +
+            "1) Add New Debt\n" +
+            "2) Edit Existing Debt\n" +
+            "3) Delete Existing Debt\n" +
+            "4) Edit Increment\n" +
+            "5) Calculate Recommended Monthly Payments\n" +
+            "6) Return to Main Menu\n");
+        Console.Write("Please select one of the above menu options by entering the integer value of the option: ");
+
+        // TODO: Add type validation
+        do
+        {
+            isValid = true;
+
+            switch (Console.ReadLine())
+            {
+                case "1":
+                    Console.Write("Enter your debt's account name: ");
+
+                    string newDebtName = Console.ReadLine();
+
+                    Console.Write("Enter your debt's balance: ");
+
+                    float newDebtBalance = float.Parse(Console.ReadLine());
+
+                    Console.Write("Enter your debt's APR: ");
+
+                    float newDebtAPR = float.Parse(Console.ReadLine());
+
+                    Console.Write("Enter your debt's monthly payment formula: ");
+
+                    string newDebtMonthly = Console.ReadLine();
+
+                    Debts.Add(new Debt(newDebtName, newDebtBalance, newDebtAPR, newDebtMonthly));
+
+                    break;
+
+                case "2":
+                    break;
+
+                case "3":
+                    break;
+
+                case "4":
+                    break;
+
+                case "5":
+                    break;
+
+                case "6":
+                    isQuitting = true;
+
+                    break;
+
+                default:
+                    isValid = false;
+
+                    Console.Write("\nInvalid option, please try again: ");
+
+                    break;
+            }
+        } while (!isValid);
 
         return isQuitting;
     }

@@ -2,6 +2,7 @@
 {
     // List of all debts
     private static List<Debt> Debts = new List<Debt>();
+    private static int Increment = 1;
 
     private static void Main(string[] args)
     {
@@ -124,6 +125,34 @@
                     break;
 
                 case "2":
+                    if (Debts.Count == 0)
+                    {
+                        Console.WriteLine("No debt accounts exist");
+                        break;
+                    }
+
+                    for (int i = 0; i < Debts.Count - 1; i++)
+                    {
+                        Console.WriteLine($"{i + 1}) {Debts[i].GetName()}");
+                    }
+
+                    Console.Write("Please select a debt account to edit: ");
+
+                    int userDebtValue = int.Parse(Console.ReadLine());
+                    
+                    // TODO: Change to a standard while loop, remove if statement
+                    if (!(userDebtValue > 0 || userDebtValue <= Debts.Count))
+                    {
+                        do
+                        {
+                            Console.Write("Invalid input. Please select a debt account to edit: ");
+
+                            userDebtValue = int.Parse(Console.ReadLine());
+                        } while (!(userDebtValue > 0 || userDebtValue <= Debts.Count));
+                    }
+
+                    EditDebtAccount(userDebtValue);
+
                     break;
 
                 case "3":
@@ -150,6 +179,11 @@
         } while (!isValid);
 
         return isQuitting;
+    }
+
+    private static void EditDebtAccount(int debtIndex)
+    {
+
     }
 
     // Saves debts to a writable text file
@@ -232,6 +266,12 @@
         public void UpdateAPR(float newAPR)
         {
             APR = newAPR;
+        }
+
+        // Returns debt name
+        public string GetName()
+        {
+            return Name;
         }
 
         // Returns monthly payment based on MonthlyPayment formula

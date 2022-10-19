@@ -26,7 +26,7 @@
                 Console.WriteLine(debt.ToString());
             }
 
-            Console.WriteLine("\n");
+            Console.WriteLine($"\nCurrent increment: ${Increment}\n");
         } while (!ProgramMenu());
     }
 
@@ -99,6 +99,7 @@
         // TODO: Add type validation
         do
         {
+            int userDebtValue;
             isValid = true;
 
             switch (Console.ReadLine())
@@ -133,12 +134,12 @@
 
                     for (int i = 0; i < Debts.Count - 1; i++)
                     {
-                        Console.WriteLine($"{i + 1}) {Debts[i].GetName()}");
+                        Console.WriteLine($"{i + 1}) {Debts[i].Name}");
                     }
 
                     Console.Write("Please select a debt account to edit: ");
 
-                    int userDebtValue = int.Parse(Console.ReadLine());
+                    userDebtValue = int.Parse(Console.ReadLine());
                     
                     // TODO: Change to a standard while loop, remove if statement
                     if (!(userDebtValue > 0 || userDebtValue <= Debts.Count))
@@ -151,14 +152,46 @@
                         } while (!(userDebtValue > 0 || userDebtValue <= Debts.Count));
                     }
 
-                    EditDebtAccount(userDebtValue);
+                    EditDebtAccount(userDebtValue - 1);
 
                     break;
 
                 case "3":
+                    if (Debts.Count == 0)
+                    {
+                        Console.WriteLine("No debt accounts exist");
+                        break;
+                    }
+
+                    for (int i = 0; i < Debts.Count - 1; i++)
+                    {
+                        Console.WriteLine($"{i + 1}) {Debts[i].Name}");
+                    }
+
+                    Console.Write("Please select a debt account to delete: ");
+
+                    userDebtValue = int.Parse(Console.ReadLine());
+
+                    // TODO: Change to a standard while loop, remove if statement
+                    if (!(userDebtValue > 0 || userDebtValue <= Debts.Count))
+                    {
+                        do
+                        {
+                            Console.Write("Invalid input. Please select a debt account to delete: ");
+
+                            userDebtValue = int.Parse(Console.ReadLine());
+                        } while (!(userDebtValue > 0 || userDebtValue <= Debts.Count));
+                    }
+
+                    Debts.RemoveAt(userDebtValue - 1);
+
                     break;
 
                 case "4":
+                    Console.Write("Please enter a new increment value: ");
+
+                    Increment = int.Parse(Console.ReadLine());
+
                     break;
 
                 case "5":
@@ -181,9 +214,55 @@
         return isQuitting;
     }
 
-    private static void EditDebtAccount(int debtIndex)
+    private static int EditDebtAccount(int debtIndex)
     {
+        Console.WriteLine("1) Account Name\n" +
+            "2) Account Balance\n" +
+            "3) Account APR\n" +
+            "4) Account Monthly Payment Formula\n" +
+            "5) Cancel");
+        Console.Write("\nPlease select an option to edit from above");
 
+        int userInput = int.Parse(Console.ReadLine());
+
+        while (userInput < 1 || userInput > 5)
+        {
+            Console.Write("Invalid input, please try again: ");
+
+            userInput = int.Parse(Console.ReadLine());
+        }
+
+        switch (userInput)
+        {
+            case 1:
+                Console.Write("Please enter a new account name: ");
+
+                Debts[debtIndex].Name = Console.ReadLine();
+
+                break;
+            case 2:
+                Console.Write("Please enter a new account balance: ");
+
+                Debts[debtIndex].Balance = float.Parse(Console.ReadLine());
+
+                break;
+            case 3:
+                Console.Write("Please enter a new account APR: ");
+
+                Debts[debtIndex].APR = float.Parse(Console.ReadLine());
+
+                break;
+            case 4:
+                Console.Write("Please enter a new account monthly payment formula: ");
+
+                Debts[debtIndex].MonthlyPayment = Console.ReadLine();
+
+                break;
+            case 5:
+                return 1;
+        }
+
+        return 0;
     }
 
     // Saves debts to a writable text file
@@ -245,16 +324,16 @@
     class Debt
     {
         // Debt account name
-        private string Name = "";
+        public string Name = "";
 
         // Debt account's current balance
-        private float Balance = 0;
+        public float Balance = 0;
 
         // Debt account's APR
-        private float APR = 0;
+        public float APR = 0;
 
         // Debt account's monthly payment formula
-        private string MonthlyPayment = "";
+        public string MonthlyPayment = "";
 
         // Updates balance of account based on adjustment amount
         public void UpdateBalance(float adjustment)
@@ -266,12 +345,6 @@
         public void UpdateAPR(float newAPR)
         {
             APR = newAPR;
-        }
-
-        // Returns debt name
-        public string GetName()
-        {
-            return Name;
         }
 
         // Returns monthly payment based on MonthlyPayment formula

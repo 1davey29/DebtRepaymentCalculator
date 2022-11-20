@@ -117,11 +117,31 @@
 
                     float newDebtAPR = float.Parse(Console.ReadLine());
 
-                    Console.Write("Enter your debt's monthly payment formula: ");
+                    string monthlyPayment = "";
+                    string paymentFormat = "";
 
-                    string newDebtMonthly = Console.ReadLine();
+                    Console.Write("Is your monthly payment static of formulaic? ");
 
-                    Debts.Add(new Debt(newDebtName, newDebtBalance, newDebtAPR, newDebtMonthly));
+                    paymentFormat = Console.ReadLine();
+
+                    if (paymentFormat.Equals("static"))
+                    {
+                        Console.Write("Please enter your static monthly payment amount: ");
+
+                        float staticPayment = float.Parse(Console.ReadLine());
+
+                        monthlyPayment = $"{paymentFormat}:::{staticPayment}";
+                    }
+                    else
+                    {
+                        Console.Write("Please enter your formulaic monthly payment amount: ");
+
+                        string formulaicPayment = Console.ReadLine();
+
+                        monthlyPayment = $"{paymentFormat}:::{formulaicPayment}";
+                    }
+
+                    Debts.Add(new Debt(newDebtName, newDebtBalance, newDebtAPR, monthlyPayment));
 
                     break;
 
@@ -253,9 +273,31 @@
 
                 break;
             case 4:
-                Console.Write("Please enter a new account monthly payment formula: ");
+                string monthlyPayment = "";
+                string paymentFormat = "";
 
-                Debts[debtIndex].MonthlyPayment = Console.ReadLine();
+                Console.Write("Is your monthly payment static of formulaic? ");
+
+                paymentFormat = Console.ReadLine();
+
+                if (paymentFormat.Equals("static"))
+                {
+                    Console.Write("Please enter your static monthly payment amount: ");
+
+                    float staticPayment = float.Parse(Console.ReadLine());
+
+                    monthlyPayment = $"{paymentFormat}:::{staticPayment}";
+                }
+                else
+                {
+                    Console.Write("Please enter your formulaic monthly payment amount: ");
+
+                    string formulaicPayment = Console.ReadLine();
+
+                    monthlyPayment = $"{paymentFormat}:::{formulaicPayment}";
+                }
+
+                Debts[debtIndex].MonthlyPayment = monthlyPayment;
 
                 break;
             case 5:

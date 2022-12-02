@@ -389,10 +389,35 @@
             APR = newAPR;
         }
 
+        private float CalculateMonthlyPayment(string formula)
+        {
+            float monthlyPayment = 0;
+            string[] funcCalls = formula.Split('(');
+
+            funcCalls[funcCalls.Length - 1] = funcCalls[funcCalls.Length - 1].Remove(funcCalls[funcCalls.Length - 1].Length - 1, 1);
+
+            if (funcCalls[0].StartsWith("min"))
+            {
+
+            }
+
+            return monthlyPayment;
+        }
+
         // Returns monthly payment based on MonthlyPayment formula
         public float GetMonthlyPayment()
         {
             float monthlyPayment = 0;
+            string[] paymentFormula = MonthlyPayment.Split(":::");
+
+            if (paymentFormula[0].Equals("static"))
+            {
+                monthlyPayment = float.Parse(paymentFormula[1]);
+            }
+            else
+            {
+                monthlyPayment = CalculateMonthlyPayment(paymentFormula[1]);
+            }
 
             return monthlyPayment;
         }

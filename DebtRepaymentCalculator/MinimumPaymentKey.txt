@@ -5,7 +5,10 @@ static(num)
 overBal(percent)
 lateStatic(num)
 latePer(percent)
+minBal(num)
 
+if FORMULA starts with MIN:
+	check for MIN balance requirement
 if FORMULA starts with HI or LO:
 	run each FORMULA, determine highest or lowest, select based on keyword
 ASSUME only addition:

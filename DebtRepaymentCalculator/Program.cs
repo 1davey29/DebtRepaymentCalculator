@@ -392,13 +392,26 @@
         private float CalculateMonthlyPayment(string formula)
         {
             float monthlyPayment = 0;
-            string[] funcCalls = formula.Split('(');
+            List<String> funcCalls = formula.Split('(').ToList<String>();
 
-            funcCalls[funcCalls.Length - 1] = funcCalls[funcCalls.Length - 1].Remove(funcCalls[funcCalls.Length - 1].Length - 1, 1);
+            funcCalls[funcCalls.Count - 1] = funcCalls[funcCalls.Count - 1].Remove(funcCalls[funcCalls.Count - 1].Length - 1, 1);
 
             if (funcCalls[0].StartsWith("min"))
             {
+                funcCalls.RemoveAt(0);
 
+                float min = float.Parse(funcCalls[0].Split(',')[0]);
+
+                funcCalls[0] = funcCalls[0].Split(',')[1];
+
+                if (Balance < min)
+                {
+                    monthlyPayment = Balance;
+                }
+                else
+                {
+
+                }
             }
 
             return monthlyPayment;

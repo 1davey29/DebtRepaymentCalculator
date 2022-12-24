@@ -5,7 +5,7 @@ static(num)
 overBal(percent)
 lateStatic(num)
 latePer(percent)
-minBal(num)
+minBal(num,func)
 
 if FORMULA starts with MIN:
 	check for MIN balance requirement

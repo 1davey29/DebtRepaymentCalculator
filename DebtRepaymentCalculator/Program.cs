@@ -410,7 +410,20 @@
                 }
                 else
                 {
+                    if (funcCalls[0].StartsWith("high") || funcCalls[0].StartsWith("low"))
+                    {
+                        int indexSplit = funcCalls.FindIndex(x => x.Equals(";"));
+                        List<string> firstFormula = funcCalls.GetRange(0, indexSplit);
+                        List<string> secondFormula = funcCalls.GetRange(indexSplit + 1, funcCalls.Count - indexSplit - 1);
+                        float firstPayment = 0;
+                        float secondPayment = 0;
 
+                        monthlyPayment = funcCalls[0].StartsWith("high") ? (firstPayment > secondPayment ? firstPayment : secondPayment) : (firstPayment < secondPayment ? firstPayment : secondPayment);
+                    }
+                    else
+                    {
+
+                    }
                 }
             }
 
